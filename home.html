@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Page</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow-x: hidden;
+      animation: backgroundGlow 6s infinite alternate;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      padding: 15px 25px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #a777e3, #6e8efb);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
+      transition: all 0.5s ease-in-out;
+    }
+
+    button:hover::after {
+      left: 100%;
+    }
+
+    @keyframes backgroundGlow {
+      0% {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+      }
+      100% {
+        background: linear-gradient(135deg, #a777e3, #6e8efb);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Select Your Role</h1>
+  <div class="button-container">
+    <a href="admin.html"><button>Admin</button></a>
+    <a href="buyer.html"><button>Buyer</button></a>
+    <a href="follower.html"><button>Follower</button></a>
+  </div>
+</body>
+</html>
