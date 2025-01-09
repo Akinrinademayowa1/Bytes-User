@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+  
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow-x: hidden;
+      animation: backgroundGlow 6s infinite alternate;
+    }
+  
+    .table-container {
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      color: #333;
+      animation: slideIn 1.2s ease-out;
+    }
+  
+    .table-container h2 {
+      text-align: center;
+      color: #6e8efb;
+      margin-bottom: 20px;
+      animation: textWave 2s ease-in-out infinite;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+  
+    th {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      animation: popEffect 0.5s ease-out 1s;
+    }
+  
+    tr:nth-child(even) {
+      background-color: #f3f4f6;
+    }
+  
+    tr:hover {
+      background-color: #e9effd;
+      transition: background-color 0.3s ease-in-out;
+    }
+  
+    td img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    button {
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+  
+    button:hover {
+      background: linear-gradient(135deg, #a777e3, #6e8efb);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+  
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
+      transition: all 0.5s ease-in-out;
+    }
+  
+    button:hover::after {
+      left: 100%;
+    }
+  
+    @keyframes backgroundGlow {
+      0% {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+      }
+      100% {
+        background: linear-gradient(135deg, #a777e3, #6e8efb);
+      }
+    }
+  
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  
+    @keyframes popEffect {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+  
+    @keyframes textWave {
+      0% {
+        letter-spacing: 0px;
+      }
+      50% {
+        letter-spacing: 2px;
+      }
+      100% {
+        letter-spacing: 0px;
+      }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="table-container">
+    <h2>Admin Dashboard</h2>
+    <table id="adminTable">
+      <thead>
+        <tr>
+          <th>Social Media</th>
+          <th>Profile Link</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Budget</th>
+          <th>Followers Ordered</th>
+          <th>Transaction Ref ID</th>
+          <th>Status</th>
+          <th>Proof</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem("orders")) || [];
+      const tbody = document.querySelector("#adminTable tbody");
+      tbody.innerHTML = "";
+
+      tasks.forEach((task, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${task.socialMedia}</td>
+          <td><a href="${task.profileLink}" target="_blank">View Profile</a></td>
+          <td>${task.username}</td>
+          <td>${task.email}</td>
+          <td>${task.budget}</td>
+          <td>${task.followers}</td>
+          <td>${task.reference}</td>
+          <td>${task.status}</td>
+          <td>
+            ${
+              task.proof
+                ? `<img src="${task.proof}" alt="Proof">`
+                : "No proof submitted yet"
+            }
+          </td>
+          <td>
+            ${
+              task.status === "Approved" || task.status === "Completed"
+                ? `<button disabled>Approved</button>`
+                : `<button onclick="approveTask(${index})">Approve</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function approveTask(index) {
+      const tasks = JSON.parse(localStorage.getItem("orders")) || [];
+      tasks[index].status = "Approved";
+      localStorage.setItem("orders", JSON.stringify(tasks));
+      alert("Task approved successfully!");
+      loadTasks();
+    }
+
+    window.onload = loadTasks;
+  </script>
+</body>
+</html>
