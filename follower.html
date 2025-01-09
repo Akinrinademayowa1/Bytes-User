@@ -5,158 +5,222 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Follower Dashboard</title>
   <style>
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow-x: hidden;
+      animation: backgroundGlow 6s infinite alternate;
+    }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  overflow-x: hidden;
-  animation: backgroundGlow 6s infinite alternate;
-}
+    .table-container {
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      color: #333;
+      animation: slideIn 1.2s ease-out;
+    }
 
-.table-container {
-  width: 90%;
-  margin: 20px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  color: #333;
-  animation: slideIn 1.2s ease-out;
-}
+    .table-container h2 {
+      text-align: center;
+      color: #6e8efb;
+      margin-bottom: 20px;
+      animation: textWave 2s ease-in-out infinite;
+    }
 
-.table-container h2 {
-  text-align: center;
-  color: #6e8efb;
-  margin-bottom: 20px;
-  animation: textWave 2s ease-in-out infinite;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
 
-th, td {
-  padding: 10px;
-  text-align: left;
-}
+    th {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      animation: popEffect 0.5s ease-out 1s;
+    }
 
-th {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  animation: popEffect 0.5s ease-out 1s;
-}
+    tr:nth-child(even) {
+      background-color: #f3f4f6;
+    }
 
-tr:nth-child(even) {
-  background-color: #f3f4f6;
-}
+    tr:hover {
+      background-color: #e9effd;
+      transition: background-color 0.3s ease-in-out;
+    }
 
-tr:hover {
-  background-color: #e9effd;
-  transition: background-color 0.3s ease-in-out;
-}
+    td img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
 
-td img {
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
+    button {
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-button {
-  padding: 8px 15px;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
+    button:hover {
+      background: linear-gradient(135deg, #a777e3, #6e8efb);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
 
-button:hover {
-  background: linear-gradient(135deg, #a777e3, #6e8efb);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
 
-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
+      transition: all 0.5s ease-in-out;
+    }
 
-button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-45deg);
-  transition: all 0.5s ease-in-out;
-}
+    button:hover::after {
+      left: 100%;
+    }
 
-button:hover::after {
-  left: 100%;
-}
+    @keyframes backgroundGlow {
+      0% {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+      }
+      100% {
+        background: linear-gradient(135deg, #a777e3, #6e8efb);
+      }
+    }
 
-@keyframes backgroundGlow {
-  0% {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-  }
-  100% {
-    background: linear-gradient(135deg, #a777e3, #6e8efb);
-  }
-}
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
-@keyframes slideIn {
-  0% {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+    @keyframes popEffect {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
 
-@keyframes popEffect {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
+    @keyframes textWave {
+      0% {
+        letter-spacing: 0px;
+      }
+      50% {
+        letter-spacing: 2px;
+      }
+      100% {
+        letter-spacing: 0px;
+      }
+    }
 
-@keyframes textWave {
-  0% {
-    letter-spacing: 0px;
-  }
-  50% {
-    letter-spacing: 2px;
-  }
-  100% {
-    letter-spacing: 0px;
-  }
-}
+    @media (max-width: 820px) {
+      body {
+        padding: 10px;
+      }
+
+      .table-container {
+        width: 100%;
+        padding: 15px;
+        margin: 10px auto;
+        overflow-x: auto; /* Allows horizontal scrolling for content */
+      }
+
+      table {
+        font-size: 0.9em;
+        width: 100%; /* Ensures table stays within container */
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      td img {
+        max-width: 70px;
+        max-height: 70px;
+      }
+
+      button {
+        padding: 6px 10px;
+        font-size: 0.9em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .table-container h2 {
+        font-size: 1.2em;
+         overflow-x: auto; /* Allows horizontal scrolling for content */
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%; /* Ensures table stays within container */
+      }
+
+      th, td {
+        font-size: 0.8em;
+        padding: 5px;
+      }
+
+      td img {
+        max-width: 50px;
+        max-height: 50px;
+      }
+
+      button {
+        padding: 5px 8px;
+        font-size: 0.8em;
+      }
+    }
+
+    a {
+      word-break: break-word;
+    }
+  </style>
   </style>
 </head>
 <body>
